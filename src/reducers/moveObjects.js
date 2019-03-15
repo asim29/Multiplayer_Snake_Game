@@ -54,6 +54,7 @@ function moveObjects(state, action) {
       cannonBalls: [...cannonBalls],
       lives,
       started,
+      kills,
     },
     angle,
   };
