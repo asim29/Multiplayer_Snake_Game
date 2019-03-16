@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { gameWidth } from '../utils/constants';
+import { boundaryTop, boundaryBot, gameWidth } from '../utils/constants';
 
 const StartGame = (props) => {
   const button = {
-    x: gameWidth / -2, // half width
-    y: -280, // minus means up (above 0)
+    x: 0, // half width
+    y: (boundaryTop + boundaryBot)/2-50, // minus means up (above 0)
     width: gameWidth,
     height: 200,
     rx: 10, // border radius
@@ -20,7 +20,7 @@ const StartGame = (props) => {
   const text = {
     textAnchor: 'middle', // center
     x: 0, // center relative to X axis
-    y: -150, // 150 up
+    y: (boundaryTop + boundaryBot)/2, // 150 up
     style: {
       fontFamily: '"Joti One", cursive',
       fontSize: 60,

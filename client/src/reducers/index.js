@@ -1,20 +1,9 @@
 import { 
-  LEADERBOARD_LOADED, LOGGED_IN,
-  MOVE_OBJECTS, SHOOT, START_GAME 
+  MOVE_OBJECTS, START_GAME 
 } from '../actions';
 import moveObjects from './moveObjects';
 import startGame from './startGame';
-import shoot from './shoot';
 
-const snake = {
-  position: {
-      x:100, 
-      y:-500
-    },
-  size: 3,
-  direction: 1,
-  id: (new Date()).getTime(),
-}
 
 const initialGameState = {
   started: false,
@@ -25,7 +14,7 @@ const initialGameState = {
   currentPlayer: null,
   players: null,
   cannonBalls: [],
-  snakes: [snake],
+  snakes: [],
 };
 
 const initialState = {
@@ -35,18 +24,6 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case LEADERBOARD_LOADED:
-      return {
-        ...state,
-        players: action.players,
-      };
-    case LOGGED_IN:
-      return {
-        ...state,
-        currentPlayer: action.player,
-      };
-    case SHOOT:
-      return shoot(state, action);
     case MOVE_OBJECTS:
       return moveObjects(state, action);
     case START_GAME:

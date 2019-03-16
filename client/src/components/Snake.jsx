@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-type';
+import PropTypes from 'prop-types';
 import SnakeSegment from './SnakeSegment';
 
 const Snake = (props) => {
@@ -35,5 +35,17 @@ const Snake = (props) => {
 	}
 	return snake
 }
+
+
+Snake.propTypes = {
+  position: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+  }).isRequired,
+  direction: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+  size: PropTypes.number.isRequired,
+};
+
 
 export default Snake;
