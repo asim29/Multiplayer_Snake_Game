@@ -6,6 +6,16 @@ import moveObjects from './moveObjects';
 import startGame from './startGame';
 import shoot from './shoot';
 
+const snake = {
+  position: {
+      x:100, 
+      y:-500
+    },
+  size: 3,
+  direction: 1,
+  id: (new Date()).getTime(),
+}
+
 const initialGameState = {
   started: false,
   kills: 0,
@@ -15,6 +25,7 @@ const initialGameState = {
   currentPlayer: null,
   players: null,
   cannonBalls: [],
+  snakes: [snake],
 };
 
 const initialState = {

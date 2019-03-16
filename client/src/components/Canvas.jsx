@@ -1,32 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Sky from './Sky';
-import Ground from './Ground';
-import CannonBase from './CannonBase';
-import CannonPipe from './CannonPipe';
-import CannonBall from './CannonBall'
-import CurrentScore from './CurrentScore'
-import FlyingObject from './FlyingObject';
-import StartGame from './StartGame';
-import Title from './Title';
-import Leaderboard from './Leaderboard';
-import { signIn } from 'auth0-web';
-import Heart from './Heart';
+import { gameHeight, gameWidth } from '../utils/constants';
+import Background from './Background';
+import Snakebox from './Snakebox';
+import Snake from './Snake';
 
 const Canvas = (props) => {
-  const gameHeight = 1200;
-  const viewBox = [window.innerWidth / -2, 
-            100 - gameHeight, 
+  const viewBox = [window.innerWidth/-2, 
+            -gameHeight, 
             window.innerWidth, 
             gameHeight];
-  const lives = [];
-  for(let i = 0; i < props.gameState.lives; i++){
-    const heartPosition = {
-      x: -180 - (i*70),
-      y: 36
-    };
-    lives.push(<Heart key={i} position={heartPosition}/>);
-  }
 
   return (
     <svg
@@ -41,35 +24,14 @@ const Canvas = (props) => {
           <feDropShadow dx="1" dy="1" stdDeviation="2" />
         </filter>
       </defs>
-      <Sky />
-      <Ground />
-      {props.gameState.cannonBalls.map(cannonBall => (
-        <CannonBall
-          key={cannonBall.id}
-          position={cannonBall.position}
-        />
+      <Background />
+      <Snakebox />
+      {props.gameState.snakes.map((snake) => (
+        <Snake position={snake.position}
+              size={snake.size}
+              direction={snake.direction}
+              id={snake.id} />
       ))}
-      <CannonPipe rotation={props.angle} />
-      <CannonBase />
-      <CurrentScore score={props.gameState.kills} />
-
-      { ! props.gameState.started &&
-        <g>
-          <StartGame onClick={() => props.startGame()} />
-          <Title />
-          <Leaderboard currentPlayer={props.currentPlayer} 
-                        authenticate={signIn} 
-                        />
-        </g>
-      }
-
-      {props.gameState.flyingObjects.map(flyingObject => (
-        <FlyingObject
-          key={flyingObject.id}
-          position={flyingObject.position}
-        />
-      ))}
-      {lives}
     </svg>
   );
 };
