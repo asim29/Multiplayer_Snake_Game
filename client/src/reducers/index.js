@@ -7,18 +7,10 @@ import startGame from './startGame';
 
 const initialGameState = {
   started: false,
-  kills: 0,
-  lives: 3,
-  flyingObjects: [],
-  lastObjectCreatedAt: new Date(),
-  currentPlayer: null,
-  players: null,
-  cannonBalls: [],
   snakes: [],
 };
 
 const initialState = {
-  angle: 45,
   gameState: initialGameState,
 };
 

@@ -9,7 +9,7 @@ class App extends Component {
     const self = this;
 
     setInterval(() => {
-        self.props.moveObjects(self.canvasMousePosition);
+        self.props.moveObjects();
     }, 10);
     
     window.onresize = () => {

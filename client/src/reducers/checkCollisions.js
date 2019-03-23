@@ -1,36 +1,21 @@
-import { checkCollision } from '../utils/formulas';
-import { gameHeight } from '../utils/constants';
+import { boundaryLeft, boundaryRight,
+          boundaryBot, boundaryTop } from '../utils/constants';
 
-const checkCollisions = (cannonBalls, flyingDiscs) => {
-  const objectsDestroyed = [];
-  flyingDiscs.forEach((flyingDisc) => {
-    const currentLifeTime = (new Date()).getTime() - flyingDisc.createdAt;
-    const calculatedPosition = {
-      x: flyingDisc.position.x,
-      y: flyingDisc.position.y + ((currentLifeTime / 4000) * gameHeight),
-    };
-    const rectA = {
-      x1: calculatedPosition.x - 40,
-      y1: calculatedPosition.y - 10,
-      x2: calculatedPosition.x + 40,
-      y2: calculatedPosition.y + 10,
-    };
-    cannonBalls.forEach((cannonBall) => {
-      const rectB = {
-        x1: cannonBall.position.x - 8,
-        y1: cannonBall.position.y - 8,
-        x2: cannonBall.position.x + 8,
-        y2: cannonBall.position.y + 8,
-      };
-      if (checkCollision(rectA, rectB)) {
-        objectsDestroyed.push({
-          cannonBallId: cannonBall.id,
-          flyingDiscId: flyingDisc.id,
-        });
-      }
-    });
+const checkCollisions = (snakes) => {
+  const snakesDestroyed = []
+
+  const rectCorrect = 5
+
+  snakes.forEach((snake) => {
+    if(snake.position.x >= boundaryRight-rectCorrect || 
+      snake.position.x <= boundaryLeft+rectCorrect || 
+      snake.position.y >= boundaryBot-rectCorrect || 
+      snake.position.y <= boundaryTop+rectCorrect){
+      snakesDestroyed.push(snake.id);
+    }
   });
-  return objectsDestroyed;
+
+  return snakesDestroyed;
 };
 
 export default checkCollisions;

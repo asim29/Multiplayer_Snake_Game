@@ -4,10 +4,10 @@ export default (state) => {
 	const snake = {
 	  position: {
 	      x:100, 
-	      y:-500
+	      y:-700
 	    },
 	  size: 3,
-	  direction: 0,
+	  direction: 3,
 	  id: (new Date()).getTime(),
 	}
 	return {
