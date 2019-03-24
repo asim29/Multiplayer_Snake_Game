@@ -30,7 +30,7 @@ const Canvas = (props) => {
       }
       {props.gameState.snakes.map((snake) => (
         <Snake key={snake.id} 
-              position={snake.position}
+              segments={snake.segments}
               size={snake.size}
               direction={snake.direction}
               id={snake.id+1} />

@@ -10,7 +10,7 @@ class App extends Component {
 
     setInterval(() => {
         self.props.moveObjects();
-    }, 10);
+    }, 50);
     
     window.onresize = () => {
       const cnv = document.getElementById('aliens-go-home-canvas');

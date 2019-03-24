@@ -7,10 +7,10 @@ const checkCollisions = (snakes) => {
   const rectCorrect = 5
 
   snakes.forEach((snake) => {
-    if(snake.position.x >= boundaryRight-rectCorrect || 
-      snake.position.x <= boundaryLeft+rectCorrect || 
-      snake.position.y >= boundaryBot-rectCorrect || 
-      snake.position.y <= boundaryTop+rectCorrect){
+    if(snake.segments[0].x >= boundaryRight-rectCorrect || 
+      snake.segments[0].x <= boundaryLeft+rectCorrect || 
+      snake.segments[0].y >= boundaryBot-rectCorrect || 
+      snake.segments[0].y <= boundaryTop+rectCorrect){
       snakesDestroyed.push(snake.id);
     }
   });
