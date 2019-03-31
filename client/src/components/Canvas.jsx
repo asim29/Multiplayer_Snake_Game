@@ -5,6 +5,7 @@ import Background from './Background';
 import Snakebox from './Snakebox';
 import Snake from './Snake';
 import StartGame from './StartGame';
+import Waiting from './Waiting';
 
 const Canvas = (props) => {
   const viewBox = [window.innerWidth/-2, 
@@ -26,7 +27,12 @@ const Canvas = (props) => {
       <Background />
       <Snakebox />
       { !props.gameState.started &&
-        <StartGame onClick={() => props.startGame()} />
+        <StartGame onClick={() => props.startGame()} 
+                    text = {props.text}/>
+      }
+      {
+        props.gameState.started && props.gameState.waiting &&
+        <Waiting text = {props.text} />
       }
       {props.gameState.snakes.map((snake) => (
         <Snake key={snake.id} 

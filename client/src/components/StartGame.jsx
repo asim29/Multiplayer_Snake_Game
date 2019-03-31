@@ -33,7 +33,7 @@ const StartGame = (props) => {
     <g filter="url(#shadow)">
       <rect {...button} />
       <text {...text}>
-        Tap To Start!
+        {props.text}
       </text>
     </g>
   );

@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Canvas from './components/Canvas';
-
+import io from 'socket.io-client';
 
 class App extends Component {
   
   componentDidMount() {
     const self = this;
+
+    const url = "http://localhost:"
+    const port = "8000"
+
+    const socket = io.connect(url+port)
+    this.props.getIdFromServer(socket)
 
     setInterval(() => {
         self.props.moveObjects();
@@ -18,6 +24,7 @@ class App extends Component {
       cnv.style.height = `${window.innerHeight}px`;
     };
     window.onresize();
+    console.log(this.props.text)
   }
 
   render() {
@@ -25,6 +32,9 @@ class App extends Component {
       <Canvas
         gameState={this.props.gameState}
         startGame={this.props.startGame}
+        socket={this.props.socket}
+        id={this.props.myid}
+        text={this.props.text}
       />
     );
   }
