@@ -17,6 +17,8 @@ const store = createStore(
 );
 /* eslint-enable */
 
+console.log(process.argv)
+
 ReactDOM.render(
   <Provider store={store}>
     <Game />

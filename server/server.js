@@ -28,7 +28,7 @@ io.on('connection', function(socket) {
 		allSnakes.push(snake)
 		gameState.snakes = allSnakes;
 
-		if(allSnakes.length === players.length){
+		if(players.length > 1 && allSnakes.length === players.length){
 			console.log("Starting Game")
 			gameState = {
 				started: true,
@@ -68,22 +68,22 @@ io.on('connection', function(socket) {
 			} else if (key === 'ArrowUp'){
 				direction = 3;
 			}
-		}
-		const newSnakes = newGameState.snakes
-		newSnakes.forEach(snake => {
-			if(snake.id === socket.id){
-				if(direction !== -1){
-					snake.direction = direction;
+			const newSnakes = newGameState.snakes
+			newSnakes.forEach(snake => {
+				if(snake.id === socket.id){
+					if(direction !== -1){
+						snake.direction = direction;
+					}
 				}
+			});
+			allSnakes = [...newSnakes];
+			gameState = {
+				started: true,
+				waiting: false,
+				snakes: [...allSnakes],
 			}
-		});
-		allSnakes = [...newSnakes];
-		gameState = {
-			started: true,
-			waiting: false,
-			snakes: [...allSnakes],
+			io.emit('updateGameState', gameState)
 		}
-		io.emit('updateGameState', gameState)
 	});
 
 	socket.on('snakesDestroyed', function(data){
@@ -105,14 +105,21 @@ io.on('connection', function(socket) {
 			  waiting: false,
 			  started: false,
 			  snakes: [],
-			  text: "You have won! Tap To Start another game!",
+			  text: "You have won! Close and reopen to start another game!",
 			};
 			gameStateLoser = {
 				...gameStateWinner,
-				text: "You lost. Tap to start another game!",
+				text: "You lost. Close and reopen to start game!",
 			}
 			playersLeft[0].emit('updateGameState', gameStateWinner);
 			playersLeft[0].broadcast.emit('updateGameState', gameStateLoser);
+			started = false;
+			gameState = {
+				waiting: false,
+				started: false,
+				snakes: [],
+				text: "Tap to start",	
+			}
 		} else if (playersLeft.length === 0){
 			allSnakes = []
 			players = []

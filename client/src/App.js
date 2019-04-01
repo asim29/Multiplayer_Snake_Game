@@ -11,7 +11,7 @@ class App extends Component {
   componentDidMount() {
     const self = this;
 
-    const url = "http://localhost:"
+    const url = "http://10.105.15.219:"
     const port = "8000"
 
     socket = io.connect(url+port)
