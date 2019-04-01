@@ -1,6 +1,6 @@
 function createSnake(id) {
-	x_position = Math.floor(Math.random()*100 + 100);
-	y_position = Math.floor(Math.random()*(-500) - 100);
+	let x_position = Math.floor(Math.random()*(900) - 450);
+	let y_position = Math.floor(Math.random()*(400) - 800);
 	const direction = Math.floor(Math.random()*4);
 
 	const snake = {

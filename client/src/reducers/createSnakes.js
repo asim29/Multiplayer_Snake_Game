@@ -1,21 +1,23 @@
 export default (state) => {
   if ( ! state.gameState.started) return state; // game not running
 
+  	const x = 500
+  	const y = -400
 	const snake = {
 	  segments: [
 	  	{
-	      x:100, 
-	      y:-700
+	      x:x, 
+	      y:y
 	    },
 	    {
-	    	x:90,
-	    	y:-700
+	    	x:x-10,
+	    	y:y
 	    },
 	    {
-	    	x:80,
-	    	y:-700
+	    	x:x-20,
+	    	y:y
 	    }],
-	  direction: 3,
+	  direction: 1,
 	  id: (new Date()).getTime(),
 	}
 	return {

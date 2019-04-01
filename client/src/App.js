@@ -3,39 +3,57 @@ import PropTypes from 'prop-types';
 import Canvas from './components/Canvas';
 import io from 'socket.io-client';
 
+let socket;
+
 class App extends Component {
-  
+ 
+
   componentDidMount() {
     const self = this;
 
     const url = "http://localhost:"
     const port = "8000"
 
-    const socket = io.connect(url+port)
-    this.props.getIdFromServer(socket)
+    socket = io.connect(url+port)
+    self.props.getIdFromServer(socket)
 
     setInterval(() => {
-        self.props.moveObjects();
+        self.props.moveObjects(socket);
     }, 50);
-    
+
+    setInterval(() => {
+        self.props.getGameStateFromServer(socket)
+    }, 10)
+
     window.onresize = () => {
-      const cnv = document.getElementById('aliens-go-home-canvas');
+      const cnv = document.getElementById('snake-io-canvas');
       cnv.style.width = `${window.innerWidth}px`;
       cnv.style.height = `${window.innerHeight}px`;
     };
     window.onresize();
-    console.log(this.props.text)
+    window.addEventListener('keydown', (event) => {
+      this.props.turnSnake(event.key, socket)
+    })
   }
+
+
+  componentWillUnmount() {
+    console.log("Unmounting")
+    socket.disconnect()
+  }
+
+
 
   render() {
     return (
-      <Canvas
-        gameState={this.props.gameState}
-        startGame={this.props.startGame}
-        socket={this.props.socket}
-        id={this.props.myid}
-        text={this.props.text}
-      />
+      <div onKeyPress={this.handleKeyDown}>
+        <Canvas
+          gameState={this.props.gameState}
+          loadGame={this.props.loadGame}
+          id={this.props.myid}
+          socket={socket}
+        />
+      </div>
     );
   }
 }
@@ -45,7 +63,7 @@ App.propTypes = {
     started: PropTypes.bool.isRequired,
   }).isRequired,
   moveObjects: PropTypes.func.isRequired,
-  startGame: PropTypes.func.isRequired,
+  loadGame: PropTypes.func.isRequired,
 };
 
 export default App;

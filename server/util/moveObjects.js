@@ -1,5 +1,27 @@
-import { moveSpeed } from '../utils/constants';
-import checkCollisions from './checkCollisions';
+gameWidth = 1400;
+gameHeight = 1200;
+boundaryLeft = 600-gameWidth;
+boundaryRight = gameWidth-600;
+boundaryTop = 100-gameHeight;
+boundaryBot = -100;
+moveSpeed = 10;
+
+function checkCollisions(snakes) {
+  const snakesDestroyed = []
+
+  const rectCorrect = 5
+
+  snakes.forEach((snake) => {
+    if(snake.segments[0].x >= boundaryRight-rectCorrect || 
+      snake.segments[0].x <= boundaryLeft+rectCorrect || 
+      snake.segments[0].y >= boundaryBot-rectCorrect || 
+      snake.segments[0].y <= boundaryTop+rectCorrect){
+      snakesDestroyed.push(snake.id);
+    }
+  });
+
+  return snakesDestroyed;
+};
 
 function moveSnake(snake) {
   const newSegments = [];
@@ -39,27 +61,19 @@ function moveSnake(snake) {
 	return snake;
 }
 
-function moveObjects(state, socket) {
-  if (!state.gameState.started) return state;
+function moveObjects(gameState) {
+  if (!gameState.started) return gameState;
 
+  const destroyedSnakes = checkCollisions(gameState.snakes)
 
-  const destroyedSnakes = checkCollisions(state.gameState.snakes)
-
-  if(destroyedSnakes.length > 0){
-    console.log("Emitting");
-    socket.emit('snakesDestroyed', {gameState: state.gameState, snakes: destroyedSnakes});
-  }
-
-  state.gameState.snakes.map((snake) => (moveSnake(snake)))
-  const snakes = state.gameState.snakes.filter(snake =>
+  gameState.snakes.map((snake) => (moveSnake(snake)))
+  const snakes = gameState.snakes.filter(snake =>
     (destroyedSnakes.indexOf(snake.id)))
+  
   return {
-    ...state,
-    gameState: {
-      ...state.gameState,
+      ...gameState,
       snakes: [...snakes],
-    },
   };
 }
 
-export default moveObjects;
+module.exports.moveObjects = moveObjects;

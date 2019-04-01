@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { gameHeight } from '../utils/constants';
 import Background from './Background';
 import Snakebox from './Snakebox';
@@ -15,7 +14,7 @@ const Canvas = (props) => {
 
   return (
     <svg
-      id="aliens-go-home-canvas"
+      id="snake-io-canvas"
       preserveAspectRatio="xMaxYMax none"
       viewBox={viewBox}
     >
@@ -27,12 +26,12 @@ const Canvas = (props) => {
       <Background />
       <Snakebox />
       { !props.gameState.started &&
-        <StartGame onClick={() => props.startGame()} 
-                    text = {props.text}/>
+        <StartGame onClick={() => props.loadGame(props.socket)} 
+                    text = {props.gameState.text}/>
       }
       {
         props.gameState.started && props.gameState.waiting &&
-        <Waiting text = {props.text} />
+        <Waiting text = {props.gameState.text} />
       }
       {props.gameState.snakes.map((snake) => (
         <Snake key={snake.id} 
@@ -44,14 +43,5 @@ const Canvas = (props) => {
     </svg>
   );
 };
-
-Canvas.propTypes = {
-  gameState: PropTypes.shape({
-    started: PropTypes.bool.isRequired,
-  }).isRequired,
-  startGame: PropTypes.func.isRequired,
-};
-
-
 
 export default Canvas;
