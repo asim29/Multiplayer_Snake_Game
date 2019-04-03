@@ -1,32 +1,41 @@
 import { connect } from 'react-redux';
 import App from '../App';
 import { 
-  leaderboardLoaded, loggedIn,
-  moveObjects, startGame, shoot
+  moveObjects, loadGame, 
+  addSnake, getId, getIdFromServer,
+  removeSnake, turnSnake, getGameStateFromServer,
 } from '../actions/index';
 
 const mapStateToProps = state => ({
-  angle: state.angle,
   gameState: state.gameState,
-  currentPlayer: state.currentPlayer,
-  players: state.players,
+  socket: state.socket,
+  myid: state.myid,
 });
 
 const mapDispatchToProps = dispatch => ({
-  leaderboardLoaded: (players) => {
-    dispatch(leaderboardLoaded(players));
+  moveObjects: (socket) => {
+    dispatch(moveObjects(socket));
   },
-  loggedIn: (player) => {
-    dispatch(loggedIn(player));
+  loadGame: (socket) => {
+    dispatch(loadGame(socket));
   },
-  moveObjects: (mousePosition) => {
-    dispatch(moveObjects(mousePosition));
+  addSnake: (snake) => {
+    dispatch(addSnake(snake))
   },
-  startGame: () => {
-    dispatch(startGame());
+  getId: (id) => {
+    dispatch(getId(id))
   },
-  shoot: (mousePosition) => {
-    dispatch(shoot(mousePosition));
+  removeSnake: (snakeId) => {
+    dispatch(removeSnake(snakeId))
+  },
+  turnSnake: (snakeId, socket) => {
+    dispatch(turnSnake(snakeId, socket))
+  },
+  getIdFromServer: (socket) => {
+    dispatch(getIdFromServer(socket))
+  },
+  getGameStateFromServer: (socket) => {
+    dispatch(getGameStateFromServer(socket))
   },
 });
 

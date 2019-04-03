@@ -1,45 +1,58 @@
 import { 
-  LEADERBOARD_LOADED, LOGGED_IN,
-  MOVE_OBJECTS, SHOOT, START_GAME 
+  MOVE_OBJECTS, LOAD_GAME,
+  ADD_SNAKE, GET_ID,
+  REMOVE_SNAKE, 
+  TURN_SNAKE, UPDATE_GAME_STATE,
 } from '../actions';
 import moveObjects from './moveObjects';
-import startGame from './startGame';
-import shoot from './shoot';
+import loadGame from './loadGame';
+import removeSnake from './removeSnake';
+import turnSnake from './turnSnake';
 
 const initialGameState = {
+  waiting: false,
   started: false,
-  kills: 0,
-  lives: 3,
-  flyingObjects: [],
-  lastObjectCreatedAt: new Date(),
-  currentPlayer: null,
-  players: null,
-  cannonBalls: [],
+  snakes: [],
+  text: "Tap To Start!",
 };
 
 const initialState = {
-  angle: 45,
   gameState: initialGameState,
+  myid: null,
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case LEADERBOARD_LOADED:
+    case TURN_SNAKE:
+      return turnSnake(state, action)
+    case UPDATE_GAME_STATE:
       return {
         ...state,
-        players: action.players,
-      };
-    case LOGGED_IN:
+        gameState: action.gameState,
+      }
+    case REMOVE_SNAKE:
+      return removeSnake(state, action.snakeId);
+    case ADD_SNAKE:
       return {
         ...state,
-        currentPlayer: action.player,
+        gameState: {
+          ...state.gameState,
+          snakes: [  
+            ...state.gameState.snakes,
+            action.snake,
+          ] 
+        }
       };
-    case SHOOT:
-      return shoot(state, action);
+    case GET_ID:
+      return {
+        ...state,
+        myid: action.id,
+      };
     case MOVE_OBJECTS:
-      return moveObjects(state, action);
-    case START_GAME:
-      return startGame(state, initialGameState);
+      return moveObjects(state, action.socket);
+    case LOAD_GAME:
+      console.log("In load game reducer: ", action.socket)
+      return loadGame(state, action.socket);
     default:
       return state;
   }

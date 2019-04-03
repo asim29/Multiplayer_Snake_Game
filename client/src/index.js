@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
 import './index.css';
 import Game from './containers/Game';
 import reducer from './reducers';
@@ -12,8 +13,11 @@ import * as serviceWorker from './serviceWorker';
 const store = createStore(
   reducer, /* preloadedState, */
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk)
 );
 /* eslint-enable */
+
+console.log(process.argv)
 
 ReactDOM.render(
   <Provider store={store}>

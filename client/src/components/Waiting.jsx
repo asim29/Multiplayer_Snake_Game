@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { boundaryTop, boundaryBot } from '../utils/constants';
 
-const StartGame = (props) => {
+const Waiting = (props) => {
   const text = {
     textAnchor: 'middle', // center
     x: 0, // center relative to X axis
@@ -13,7 +12,6 @@ const StartGame = (props) => {
       fill: '#e3e3e3',
       cursor: 'pointer',
     },
-    onClick: props.onClick,
   };
   return (
     <g filter="url(#shadow)">
@@ -24,8 +22,4 @@ const StartGame = (props) => {
   );
 };
 
-StartGame.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
-
-export default StartGame;
+export default Waiting;
