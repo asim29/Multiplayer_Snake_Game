@@ -46,7 +46,6 @@ function moveObjects(state, socket) {
   const destroyedSnakes = checkCollisions(state.gameState.snakes)
 
   if(destroyedSnakes.length > 0){
-    console.log("Emitting");
     socket.emit('snakesDestroyed', {gameState: state.gameState, snakes: destroyedSnakes});
   }
 

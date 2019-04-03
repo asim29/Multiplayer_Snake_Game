@@ -50,6 +50,9 @@ const checkCollisions = (snakes) => {
             }
             if(checkOverlap(headRect, rect2)){
               snakesDestroyed.push(otherSnake.id);
+              if(Math.abs(snake.direction - otherSnake.direction)===2){
+                snakesDestroyed.push(snake.id);
+              }
             }
           })
         }
