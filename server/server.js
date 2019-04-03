@@ -28,6 +28,8 @@ io.on('connection', function(socket) {
 		allSnakes.push(snake)
 		gameState.snakes = allSnakes;
 
+		console.log("Number of players:", players.length)
+		console.log("Snake length:", allSnakes.length)
 		if(players.length > 1 && allSnakes.length === players.length){
 			console.log("Starting Game")
 			gameState = {
@@ -132,7 +134,6 @@ io.on('connection', function(socket) {
 			}
 		} else if (allSnakes.length === 0){
 			allSnakes = []
-			players = []
 			started = false;
 			gameState = {
 				started: false,

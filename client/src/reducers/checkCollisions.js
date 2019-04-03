@@ -23,8 +23,8 @@ const checkCollisions = (snakes) => {
     const headRect = {
       x1: head.x,
       y1: head.y,
-      x2: head.x + 12,
-      y2: head.y + 12,
+      x2: head.x + 9,
+      y2: head.y + 9,
     };
     snakes.forEach((otherSnake) => {
       if(otherSnake.id !== snake.id){
@@ -32,8 +32,8 @@ const checkCollisions = (snakes) => {
         const headRect2 = {
           x1: otherHead.x,
           y1: otherHead.y,
-          x2: otherHead.x + 12,
-          y2: otherHead.y + 12,
+          x2: otherHead.x + 9,
+          y2: otherHead.y + 9,
         };
         if(checkOverlap(headRect, headRect2)){
           snakesDestroyed.push(snake.id);
@@ -45,8 +45,8 @@ const checkCollisions = (snakes) => {
             const rect2 = {
               x1: seg.x,
               y1: seg.y,
-              x2: seg.x + 12,
-              y2: seg.y + 12,
+              x2: seg.x + 9,
+              y2: seg.y + 9,
             }
             if(checkOverlap(headRect, rect2)){
               snakesDestroyed.push(otherSnake.id);
