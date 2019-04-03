@@ -80,6 +80,7 @@ io.on('connection', function(socket) {
 			gameState = {
 				started: true,
 				waiting: false,
+				text: null,
 				snakes: [...allSnakes],
 			}
 			io.emit('updateGameState', gameState)
@@ -97,13 +98,14 @@ io.on('connection', function(socket) {
 		const playersLeft = players.filter(player =>
 			(destroyedSnakes.indexOf(player.id)))
 		players = playersLeft
+
 		console.log("In snake destroyed")
 		console.log("Snakes left are: ", allSnakes.length)
 		console.log("Players left are: ", players.length)
 		if(playersLeft.length === 1){
 			gameStateWinner = {
-			  waiting: false,
 			  started: false,
+			  waiting: false,
 			  snakes: [],
 			  text: "You have won! Close and reopen to start another game!",
 			};
